@@ -47,8 +47,10 @@ public class overall extends HttpServlet {
             
             String []doc_para={"Unsafe","Safe","Good","Prefect"};
             String []ph_para={"Unsafe (Acidic)","Safe","Unsafe (Basic)"};
+            String []sal_para={"<30",">30 & <40",">40"};
             int []doc=new int[4];
             int []ph=new int[3];
+            int []sal=new int[3];
             
             Set set=data.entrySet();
             Iterator itr=set.iterator();  
@@ -68,16 +70,25 @@ public class overall extends HttpServlet {
                 }
                 if((Double)current.get(1)<6.5){
                     ph[0]++;
-                }else if((Double)current.get(1)>=6.5&&(Double)current.get(0)<=8.5){
+                }else if((Double)current.get(1)>=6.5&&(Double)current.get(1)<=8.5){
                     ph[1]++;
                 }else if((Double)current.get(1)>8.0){
                     ph[2]++;
                 }
+                if((Double)current.get(4)<6.5){
+                    sal[0]++;
+                }else if((Double)current.get(4)>=6.5&&(Double)current.get(4)<=8.5){
+                    sal[1]++;
+                }else if((Double)current.get(4)>8.0){
+                    sal[2]++;
+                }
             }
             request.setAttribute("ph_para",ph_para);
             request.setAttribute("doc_para",doc_para);
+            request.setAttribute("sal_para",sal_para);
             request.setAttribute("ph",ph);
             request.setAttribute("doc",doc);
+            request.setAttribute("sal",sal);
             
             request.getRequestDispatcher("overall.jsp").forward(request, response);
             }

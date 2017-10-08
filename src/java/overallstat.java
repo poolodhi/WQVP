@@ -113,10 +113,10 @@ public class overallstat implements datasetinfo{
         ArrayList<Double> x=new ArrayList<Double>();
         x.add(ph/(double)recordcount);
         x.add(doc/(double)recordcount);
-        //x.add((double)tn/(double)recordcount);
-        //x.add((double)tp/(double)recordcount);
-        //x.add(sal/(double)recordcount);
-        //x.add(turb/(double)recordcount);
+        x.add((double)tn/(double)recordcount);
+        x.add((double)tp/(double)recordcount);
+        x.add(sal/(double)recordcount);
+        x.add(turb/(double)recordcount);
         data.put(index,x);
     }
 }

@@ -16,11 +16,53 @@
         <script src="./lib/popper.min.js" ></script>
         <script src="./lib/bootstrap/js/bootstrap.min.js" ></script>
         <script src="./lib/echarts.min.js"></script>
+        <style>
+            .xbtn{
+                margin:5px;
+            }
+        </style>
         <script type="text/javascript">
-            $(window).on('resize', function(){
+            function resetcharts(){
+                 if(myChart1 != null && myChart1 != undefined){
+                myChart1.resize();
+            }
+            if(myChart != null && myChart != undefined){
+                myChart.resize();
+            }
+            }
+        $(window).on('resize', function(){
             if(myChart1 != null && myChart1 != undefined){
                 myChart1.resize();
             }
+            if(myChart != null && myChart != undefined){
+                myChart.resize();
+            }
+            if(myChart2 != null && myChart2 != undefined){
+                myChart2.resize();
+            }
+        });
+        $(document).ready(function(){
+            $("#container_doc").hide();
+            $("#container_sal").hide();
+            $("#docbutton").click(function(){
+                $("#container_ph").hide();
+                $("#container_sal").hide();
+                $("#container_doc").show();
+                myChart.resize();
+            });
+            $("#phbutton").click(function(){
+                $("#container_sal").hide();
+                $("#container_doc").hide();
+                $("#container_ph").show();
+                myChart1.resize();
+            });
+            $("#phbutton").click(function(){
+                
+                $("#container_doc").hide();
+                $("#container_ph").hide();
+                $("#container_sal").hide();
+                myChart2.resize();
+            });
         });
         </script>
     </head>
@@ -28,10 +70,26 @@
          <div class="container-fluid header" data-spy="affix">
             <div class="well text-center"><h3>WQVP</h3></div>
         </div>
+        <div class="container-fluid" data-spy="affix">
+            <div class="well text-center"><h4>Overall Analysis</h4></div>
+        </div>
+        <div id="container_ph" style="height:400px;width:100%"></div>
+        <div id="container_doc" style="height:400px;width:100%"></div>
+        <div id="container_sal" style="height:400px;width:100%"></div>
+        
+        <button id="phbutton" type="button" class="xbtn btn btn-primary">
+            pH
+        </button>
+        <button id="docbutton" type="button" class="xbtn btn btn-primary">
+            DOC
+        </button>
+        <button id="salbutton" type="button" class="xbtn btn btn-primary">
+            Salinity
+        </button>
+        
+        
+        
 
-       <div class="container">
-       <div id="container_ph" style="height:400px;width:100%"></div>
-       </div> 
        <script type="text/javascript">
         var dom1 = document.getElementById("container_ph");
         var myChart1 = echarts.init(dom1);
@@ -51,7 +109,7 @@
         option1 = {
                 title: {
                     left:'center',
-                    text:'pH at different sites',
+                    text:'pH',
                     padding:10
                 },
             tooltip: {
@@ -68,7 +126,7 @@
                 {
                     name:'pH',
                     type:'pie',
-                    radius: ['50%', '70%'],
+                     radius: ['50%', '70%'],
                     avoidLabelOverlap: false,
                     label: {
                         normal: {
@@ -78,7 +136,7 @@
                         emphasis: {
                             show: true,
                             textStyle: {
-                                fontSize: '20',
+                                fontSize: '15',
                                 fontWeight: 'bold'
                             }
                         }
@@ -112,9 +170,7 @@
        
        
        
-       <div class="contianer">
-       <div id="container_doc" style="height:400px;width:100%"></div>
-       </div> 
+       
        <script type="text/javascript">
         var dom = document.getElementById("container_doc");
         var myChart = echarts.init(dom);
@@ -135,7 +191,7 @@
             
                 title: {
                     left:'center',
-                    text:'Dissolved Oxygen at different sites',
+                    text:'Dissolved Oxygen',
                     padding:10
                 },
             tooltip: {
@@ -163,7 +219,7 @@
                         emphasis: {
                             show: true,
                             textStyle: {
-                                fontSize: '30',
+                                fontSize: '15',
                                 fontWeight: 'bold'
                             }
                         }
@@ -192,6 +248,82 @@
        
             </script>
        
+       <script type="text/javascript">
+        var dom2 = document.getElementById("container_sal");
+        var myChart2 = echarts.init(dom2);
+        var app2 = {};
+        option2 = null;
+        app2.title = 'Salinity';
+        
+        <% 
+            String sal_string="";
+            String[] sal_para=(String[])request.getAttribute("sal_para");
+            int[] sal=(int[])request.getAttribute("sal");
+            for(int i=0;i<sal_para.length;i++){
+                sal_string+="'"+sal_para[i]+"',";
+            }
+            sal_string=sal_string.substring(0,sal_string.length()-1);
+        %>
+        option2 = {
+            
+                title: {
+                    left:'center',
+                    text:'Salinity',
+                    padding:10
+                },
+            tooltip: {
+                
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+               orient: 'horizontal',
+               padding:[40,5],
+               x: 'center',
+               data:[<%=sal_string%>]
+            },
+            series: [
+                {
+                    name:'Salinity',
+                    type:'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '15',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                    <%
+                    for(int i=0;i<sal.length;i++){
+                    %>
+                    {value:<%=sal[i]%>, name:'<%=sal_para[i]%>'},
+                    <%
+                    }
+                    %>
+                    ]
+                }
+            ]
+        };
+        
+        if (option2 && typeof option2 === "object") {
+            myChart2.setOption(option2, true);
+        }
+       
+            </script>
        
        
     </body>
