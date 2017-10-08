@@ -80,6 +80,7 @@ public class overallstat implements datasetinfo{
         }
     }
     public void processdata(JSONArray records,int index){
+        System.out.print("****"+index+"****");
         double ph=0.0,doc=0.0,tn=0.0,tp=0.0,sal=0.0,turb=0.0;
         for (int i = 0, size = records.size(); i < size; i++){
             
@@ -88,29 +89,34 @@ public class overallstat implements datasetinfo{
             if(o.get("pH (Unit)")!=null){
                 ph+=Float.parseFloat((String)o.get("pH (Unit)"));
             }
-            if(o.get("Total Nitrogen as N (mg/L)")!=null){
+            if(o.get("Total Nitrogen as N (mg/L)")!=null 
+                    && !((String)o.get("Total Nitrogen as N (mg/L)")).isEmpty()){
                 tn+=Float.parseFloat((String)o.get("Total Nitrogen as N (mg/L)"));
             }
-            if(o.get("Dissolved Oxygen concentration (mg/L)")!=null){
+            if(o.get("Dissolved Oxygen concentration (mg/L)")!=null 
+                    && !((String)o.get("Dissolved Oxygen concentration (mg/L)")).isEmpty()){
                 doc+=Float.parseFloat((String)o.get("Dissolved Oxygen concentration (mg/L)"));
             }
-            if(o.get("Total Phosphorus as P (mg/L)")!=null){
+            if(o.get("Total Phosphorus as P (mg/L)")!=null
+                    && !((String)o.get("Total Phosphorus as P (mg/L)")).isEmpty()){
                 tp+=Float.parseFloat((String)o.get("Total Phosphorus as P (mg/L)"));
             }
-            if(o.get("Salinity (PSU)")!=null){
+            if(o.get("Salinity (PSU)")!=null
+                    && !((String)o.get("Salinity (PSU)")).isEmpty()){
                 sal+=Float.parseFloat((String)o.get("Salinity (PSU)"));
             }
-            if(o.get("Turbidity (NTU)")!=null){
+            if(o.get("Turbidity (NTU)")!=null
+                    && !((String)o.get("Turbidity (NTU)")).isEmpty()){
                 turb+=Float.parseFloat((String)o.get("Turbidity (NTU)"));
             }
         }
         ArrayList<Double> x=new ArrayList<Double>();
         x.add(ph/(double)recordcount);
         x.add(doc/(double)recordcount);
-        x.add((double)tn/(double)recordcount);
-        x.add((double)tp/(double)recordcount);
-        x.add(sal/(double)recordcount);
-        x.add(turb/(double)recordcount);
+        //x.add((double)tn/(double)recordcount);
+        //x.add((double)tp/(double)recordcount);
+        //x.add(sal/(double)recordcount);
+        //x.add(turb/(double)recordcount);
         data.put(index,x);
     }
 }
