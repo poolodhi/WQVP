@@ -9,8 +9,61 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">
+         <link rel="stylesheet" href="./css/main.css">
+        <script src="./lib/jquery-3.2.1.min.js"></script>
+        <script src="./lib/popper.min.js" ></script>
+        <script src="./lib/bootstrap/js/bootstrap.min.js" ></script>
+    
+    
+    
     </head>
+    
     <body>
-        <div>TODO write content</div>
+        <div class="container-fluid header" data-spy="affix">
+            <div class="well text-center"><h3>WQVP</h3></div>
+        </div>
+        <div class="container-fluid">
+                <div class="row">
+                    <div class="col-2">
+                    </div>
+                    <div class="col-8">
+                      <button type="button" class="btn btn-primary btn-lg btn-block" 
+                              data-toggle="collapse" data-target="#collapseExample"
+                              >
+                          Visualization
+                      </button>
+                      <div class="collapse" id="collapseExample">
+                           <button onClick="window.location='eachriver.jsp';" 
+                                   type="button" class="btn inner-button btn-block btn-secondary">
+                               Each river
+                           </button>
+                           <button onClick="window.location='overall';"
+                                   type="button" class="btn inner-button btn-block btn-secondary">
+                               Overall Stats
+                           </button>
+                           <button type="button" class="btn inner-button btn-block btn-secondary">
+                               Comparison
+                           </button>
+                           <button type="button" class="btn inner-button btn-block btn-secondary">
+                               Maps
+                           </button>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                    </div>
+                </div>
+            <div class="row">
+                    <div class="col-2">
+                    </div>
+                    <div class="col-8">
+                      <button type="button" class="btn btn-primary btn-lg btn-block">Prediction</button>
+                    </div>
+                    <div class="col-2">
+                    </div>
+                </div>
+        </div>
+        
     </body>
 </html>
